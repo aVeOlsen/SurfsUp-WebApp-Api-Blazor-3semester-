@@ -1,0 +1,63 @@
+﻿@model ProtoTypeV1.Models.Rental
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Opret udlejning";
+}
+
+<h4>@ViewData["Title"]</h4>
+
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            @*Button*@
+            <div>
+                <a href="/Product/Create" class="btn btn-secondary">Tilføj nyt produkt </a>
+            </div>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Product" class="control-label"></label>
+                    <select asp-for="ProductID" class="form-control" required>
+                        <option value="" disabled selected>Vælg eller opret et produkt</option>
+                        @foreach (var item in Model.Product)
+                        {
+                            <option value="@item.ProductID">@item.Brand, @item.TypeBoard</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Depositum" class="control-label"></label>
+                    <input asp-for="Depositum" class="form-control" />
+                    <span asp-validation-for="Depositum" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ByDate" class="control-label"></label>
+                    <input asp-for="ByDate" class="form-control height h1" />
+                    <span asp-validation-for="ByDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ToDate" class="control-label"></label>
+                    <input asp-for="ToDate" class="form-control" />
+                    <span asp-validation-for="ToDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" required />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a href="/Identity/Account/Manage">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

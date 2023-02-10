@@ -1,0 +1,127 @@
+﻿@page "/spots/opendetails/{SpotID:int}"
+@using SurfsUpClassLibrary
+@using Microsoft.AspNetCore.Authorization
+@using System.Runtime.CompilerServices
+@inject NavigationManager uriHelper
+@inject HttpClient http
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h2>Detaljer Spot</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class=" col-md-8">
+            <div class="form-group">
+                <strong>By:</strong>
+                <label>@spot.City</label>
+            </div>
+            <div class="form-group">
+                <strong>Adresse:</strong>
+                <label>@spot.Address</label>
+            </div>
+            <div class="form-group">
+                <strong>Spot navn:</strong>
+                <label>@spot.SpotName</label>
+            </div>
+            <div class="form-group">
+                <strong>Spot beskrivelse:</strong>
+                <label>@spot.SpotDescription</label>
+            </div>
+            <div class="form-group">
+                <strong>Spot billed:</strong>
+            </div>
+            <img src="@spot.ImageDataUrl" />
+        </div>
+    </div>
+</form>
+<_Form ButtonText="Gem review" rev="rev" OnValidSubmit="CreateReview" />
+<hr />
+<div class="card bg-light m-2">
+    <div class="card-body">
+        @{
+            foreach (var item in reviews.Where(c => c.SpotID == SpotID).OrderByDescending(c => c.Date))
+            {
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="media-heading pb-2">@item.ByUser.FirstName</h5>
+                        <p class="pb-2">Dato: @item.Date.ToShortDateString()</p>
+                        <p>Beskrivelse: @item.Description</p>
+                        <p>Rating: @item.Rating</p>
+                    </div>
+                </div>
+                <hr />
+            }
+        }
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Back" />
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public Review rev { get; set; } = new Review();
+
+    [Parameter]
+    public int SpotID { get; set; }
+
+    Spot spot = new Spot();
+
+    private List<Review> reviews { get; set; } = new List<Review>();
+
+
+
+    protected async override Task OnParametersSetAsync()
+    {
+        spot = await http.GetFromJsonAsync<Spot>($"/api/spots/{SpotID}");
+    }
+
+    protected async override Task OnInitializedAsync()
+    {
+        reviews = await http.GetFromJsonAsync<List<Review>>($"/api/reviews/");
+        foreach (var item in reviews.Where(c => c.SpotID == SpotID))
+        {
+            item.ByUser = await http.GetFromJsonAsync<ApplicationUser>($"/api/applicationuser/{item.ByUserID}");
+        }
+
+    }
+
+
+
+
+    void Cancel()
+    {
+        uriHelper.NavigateTo("/fetchdata");
+    }
+
+    async Task CreateReview()
+    {
+        if (rev.Rating <= 5 && rev.Rating > 0)
+        {
+
+            rev.SpotID = SpotID;
+            //Får fat i user og dermed userid så dette tilføjes til api controller
+            var user = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
+
+            //Bruger her JSON web token til at få fat i userID
+            rev.ByUserID = user.FindFirst(c => c.Type == "sub")?.Value;
+            await http.PostAsJsonAsync("/api/reviews/", rev);
+            uriHelper.NavigateTo($"/spots/opendetails/{this.SpotID}", true);
+        }
+        else
+        {
+            await js.InvokeVoidAsync("alert", "Rating er kun tilladt fra 1-5");
+        }
+
+    }
+
+}

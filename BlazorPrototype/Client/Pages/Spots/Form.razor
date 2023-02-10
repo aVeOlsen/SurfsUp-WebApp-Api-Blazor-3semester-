@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using SurfsUpClassLibrary
+@using System
+@using System.IO
+@using Microsoft.Extensions.Logging
+@attribute [Authorize]
+
+<hr />
+<EditForm Model="@spot">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label class="control-label">By:</label>
+        <InputText class="form-control" @bind-Value="@spot.City" />
+        <ValidationMessage For="@(()=> spot.City)" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Adresse:</label>
+        <InputText class="form-control" @bind-Value="@spot.Address" />
+        <ValidationMessage For="@(()=> spot.Address)" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Spot navn: </label>
+        <InputText class="form-control" @bind-Value="@spot.SpotName" />
+        <ValidationMessage For="@(()=> spot.SpotName)" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Beskrivelse:</label>
+        <InputText class="form-control" @bind-Value="@spot.SpotDescription" />
+        <ValidationMessage For="@(()=> spot.SpotDescription)" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Billed:</label>
+        <InputFile OnChange="@SingleUpload" multiple class="form-control" @bind-Value="@spot.SpotImage" />
+        <ValidationMessage For="@(()=> spot.SpotImage)" />
+    </div>
+    <button type="submit" class="btn btn-primary" @onclick="@OnValidSubmit">
+        @ButtonText
+    </button>
+</EditForm>
+
+<div>
+    <a asp-page="Index" href="/">Back to List</a>
+</div>
+
+@code {
+    [Parameter]
+    public Spot spot { get; set; } = new Spot();
+
+    [Parameter]
+    public string ButtonText { get; set; } = "Save";
+
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+    private async Task SingleUpload(InputFileChangeEventArgs e)
+    {
+
+        MemoryStream ms = new MemoryStream();
+        await e.File.OpenReadStream().CopyToAsync(ms);
+        spot.SpotImage = ms.ToArray();
+        ms.Close();
+        ms.Dispose();
+
+    }
+
+}

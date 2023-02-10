@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Weather Forecast";
+}
+<div class="container">
+    @*
+        forecast search og locations info section
+    *@
+    <div class="row">
+        <div class="col-12 text-center pt-5 pb-5">
+            <h1>Denmark<strong>: Weather Forecast</strong></h1>
+        </div>
+        <div class="col-12 text-center pb-5">
+            <input type="text" name="SearchLocation" id="SearchLocation" value="" placeholder="Denmark" class="text-center shadow-sm border pt-2 pb-2">
+            <button type="submit" class="flat-butt pr-5 pl-5 pt-2 pb-2 ml-2" onclick="MapUpdate()">Søg</button>
+        </div>
+        <div class="col-3"></div>
+        <div class="col-3 border">
+            <p class="font-weight-bold text-center">Latitude</p>
+        </div>
+        <div class="col-3 border">
+            <p class="font-weight-bold text-center">Longitude</p>
+        </div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+        <div class="col-3 border">
+            <p id="Latitude" class="font-weight-light text-center">55.792</p>
+        </div>
+        <div class="col-3 border">
+            <p id="Longitude" class="font-weight-light text-center">9.613</p>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+
+@*
+    forcast maps section
+*@
+<div class="container-fluid">
+    <div class="row pt-5">
+        <div class="col-sm-12 col-md-12 col-lg-12 margin-null padding-null">
+            <h2 class="my-5 h2 Font-Fam-Franklin text-center pt-5">Waves map</h2>
+            <iframe id="WaveMap" class="embed-responsive" src=""
+                    frameborder="0"
+                    height="750"></iframe>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 margin-null padding-null">
+            <h2 class="my-5 h2 Font-Fam-Franklin text-center pb-5 pt-5">Wind map</h2>
+            <iframe id="WindMap" class="embed-responsive" src=""
+                    frameborder="0"
+                    height="750"></iframe>
+        </div>
+    </div>
+</div>
+
+@*
+    forecast info section
+*@
+<div class="row">
+    <div>
+
+    </div>
+</div>

@@ -1,0 +1,78 @@
+﻿@page "/spots/delete/{SpotID:int}"
+@using SurfsUpClassLibrary
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager uriHelper
+@inject HttpClient http
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+
+<h2>Delete Spot</h2>
+<hr />
+<h3>Er du sikker på du vil slette dette?</h3>
+<form>
+    <div class="row">
+        <div class=" col-md-8">
+            <div class="form-group">
+                <strong>By:</strong>
+                <label>@spot.City</label>
+            </div>
+            <div class="form-group">
+                <strong>Adresse:</strong>
+                <label>@spot.Address</label>
+            </div>
+            <div class="form-group">
+                <strong>Spot navn:</strong>
+                <label>@spot.SpotName</label>
+            </div>
+            <div class="form-group">
+                <strong>Spot beskrivelse:</strong>
+                <label>@spot.SpotDescription</label>
+            </div>
+            <div class="form-group">
+                <strong>Spot Billed:</strong>
+            </div>
+            <img src="@spot.ImageDataUrl" />
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-danger" @onclick="@DeleteSpot" value="Delete" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@code {
+
+
+    [Parameter]
+    public int SpotID { get; set; }
+
+
+    Spot spot = new Spot();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        spot = await http.GetFromJsonAsync<Spot>($"/api/spots/{SpotID}");
+    }
+
+
+    async Task DeleteSpot()
+    {
+        await http.DeleteAsync($"api/spots/{SpotID}");
+        uriHelper.NavigateTo("/");
+
+    }
+    void Cancel()
+    {
+        uriHelper.NavigateTo("/");
+    }
+
+
+}

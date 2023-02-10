@@ -1,0 +1,68 @@
+﻿@page "/spots/details/{SpotID:int}"
+@using SurfsUpClassLibrary
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager uriHelper
+@inject HttpClient http
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+
+<h2>Detaljer Spot</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class=" col-md-8">
+            <div class="form-group">
+                <strong>By:</strong>
+                <label>@spot.City</label>
+            </div>
+            <div class="form-group">
+                <strong>Adresse:</strong>
+                <label>@spot.Address</label>
+            </div>
+            <div class="form-group">
+                <strong>Spot navn:</strong>
+                <label>@spot.SpotName</label>
+            </div>
+            <div class="form-group">
+                <strong>Spot beskrivelse:</strong>
+                <label>@spot.SpotDescription</label>
+            </div>
+            <div class="form-group">
+                <strong>Spot Billed:</strong>
+            </div>
+            <img src="@spot.ImageDataUrl" />
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Back" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@code {
+
+
+    [Parameter]
+    public int SpotID { get; set; }
+
+
+    Spot spot = new Spot();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        spot = await http.GetFromJsonAsync<Spot>($"/api/spots/{SpotID}");
+    }
+
+    void Cancel()
+    {
+        uriHelper.NavigateTo("/");
+    }
+
+
+}

@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using SurfsUpClassLibrary
+
+
+
+<hr />
+<EditForm Model="@rev">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label class="control-label">Rating fra 1-5:</label>
+        <InputNumber style="width: 100px" class="form-control" @bind-Value="@rev.Rating" />
+        <ValidationMessage For="@(()=> rev.Rating)" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Beskrivelse:</label>
+        <InputText style="width: 1000px" class="form-control-range" @bind-Value="@rev.Description" />
+        <ValidationMessage For="@(()=> rev.Description)" />
+    </div>
+    <div class="form-group">
+        <label hidden class="control-label"></label>
+        <InputDate hidden class="form-control" @bind-Value="@rev.Date" />
+        <ValidationMessage For="@(()=> rev.Date)" />
+    </div>
+    <button type="submit" class="btn btn-primary" @onclick="@OnValidSubmit">
+        @ButtonText
+    </button>
+</EditForm>
+
+@*@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@
+
+@code {
+
+
+    [Parameter]
+    public Review rev { get; set; } = new Review();
+
+    [Parameter]
+    public string ButtonText { get; set; } = "Save";
+
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+
+}

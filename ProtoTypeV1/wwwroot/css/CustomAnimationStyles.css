@@ -1,0 +1,10 @@
+﻿/*navbar animation when scrolled*/
+
+.scrolled {
+    background-color: #6B90B0 !important;
+    transition: background-color 200ms linear !important;
+}
+
+    .scrolled#navbarSupportedContent.navbar-nav .nav-item {
+        color: #555 !important;
+    }

@@ -1,0 +1,69 @@
+﻿@page "/reviews/delete/{ReviewID:int}"
+@using SurfsUpClassLibrary
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager uriHelper
+@inject HttpClient http
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+
+<h2>Delete Review</h2>
+<hr />
+<h3>Er du sikker på du vil slette dette?</h3>
+<form>
+    <div class="row">
+        <div class=" col-md-8">
+            <div class="form-group">
+                <label>Review Beskriveslse:</label>
+                <label>@rev.Description</label>
+            </div>
+            <div class="form-group">
+                <label>Rating:</label>
+                <label>@rev.Rating</label>
+            </div>
+            <div class="form-group">
+                <label>Dato:</label>
+                <label>@rev.Date</label>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-danger" @onclick="@DeleteReview" value="Delete" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@code {
+
+
+    [Parameter]
+    public int ReviewID { get; set; }
+
+
+    Review rev = new Review();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        rev = await http.GetFromJsonAsync<Review>($"/api/reviews/{ReviewID}");
+    }
+
+
+    async Task DeleteReview()
+    {
+        await http.DeleteAsync($"api/reviews/{ReviewID}");
+        uriHelper.NavigateTo("/");
+
+    }
+    void Cancel()
+    {
+        uriHelper.NavigateTo("/");
+    }
+
+
+}

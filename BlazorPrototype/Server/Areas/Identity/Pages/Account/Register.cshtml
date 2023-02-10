@@ -1,0 +1,120 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-2"></div>
+        <div class="col-8 login-sec">
+            <form asp-route-returnUrl="@Model.ReturnUrl" class="border-0" method="post">
+                <h3>Opret bruger</h3>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewFirstName"></label>
+                    <input asp-for="Input.NewFirstName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewLastName"></label>
+                    <input asp-for="Input.NewLastName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewGender"></label>
+                    <select asp-for="Input.NewGender" class="form-control">
+                        <option selected>Vælg...</option>
+                        <option value="0">Mand</option>
+                        <option value="1">Kvinde</option>
+                        <option value="2">Andet</option>
+                    </select>
+                    @*<input  asp-for="Input.NewGender" class="form-control" />*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewBirthDate"></label>
+                    <input asp-for="Input.NewBirthDate" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewPhoneNumber"></label>
+                    <input asp-for="Input.NewPhoneNumber" placeholder="0045" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewStreet"></label>
+                    <input asp-for="Input.NewStreet" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewHouseNumber"></label>
+                    <input asp-for="Input.NewHouseNumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewPostalCode"></label>
+                    <input asp-for="Input.NewPostalCode" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewRegion"></label>
+                    <input asp-for="Input.NewRegion" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewCity"></label>
+                    <input asp-for="Input.NewCity" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewCountry"></label>
+                    <input asp-for="Input.NewCountry" class="form-control" />
+                </div>
+
+
+                <button type="submit" class="btn btn-block btn-outline-info btn-primary flat-butt ">Opret bruger</button>
+            </form>
+        </div>
+
+        @*<div class="col-md-6 col-md-offset-2">
+            <section>
+                <h4>Use another service to register.</h4>
+                <hr />
+                @{
+                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                    {
+                        <div>
+                            <p>
+                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                for details on setting up this ASP.NET application to support logging in via external services.
+                            </p>
+                        </div>
+                    }
+                    else
+                    {
+                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                            <div>
+                                <p>
+                                    @foreach (var provider in Model.ExternalLogins)
+                                    {
+                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                    }
+                                </p>
+                            </div>
+                        </form>
+                    }
+                }
+            </section>
+        </div>*@
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

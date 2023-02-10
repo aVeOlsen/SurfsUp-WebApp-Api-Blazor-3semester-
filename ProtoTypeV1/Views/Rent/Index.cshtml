@@ -1,0 +1,510 @@
+﻿@model List<ProtoTypeV1.Models.Rental>
+
+@{
+    ViewData["Title"] = "Rent page";
+}
+
+
+@*
+    ejne produkt Title
+*@
+<div class="container">
+    @*
+        filtre funktions design
+    *@
+    <div class="row">
+
+    </div>
+    @* filtre categori *@
+<div class="row">
+
+    <h3 class="mt-0 mb-5 col-sm-12 col-md-12 col-lg-12 pt-5">Showing <span class="text-primary">12</span> Products <hr class="solid"></h3>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+        <h6 class="text-uppercase font-weight-bold mb-3">Categories</h6>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="category-1">
+                <label class="custom-control-label" for="category-1">Accessories</label>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="category-2">
+                <label class="custom-control-label" for="category-2">Coats &amp; Jackets</label>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="category-3">
+                <label class="custom-control-label" for="category-3">Hoodies &amp; Sweatshirts</label>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="category-4">
+                <label class="custom-control-label" for="category-4">Jeans</label>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="category-5">
+                <label class="custom-control-label" for="category-5">Shirts</label>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="category-6">
+                <label class="custom-control-label" for="category-6">Underwear</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+        <h6 class="text-uppercase font-weight-bold">Size</h6>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="filter-size-1">
+                <label class="custom-control-label" for="filter-size-1">X-Small</label>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="filter-size-2">
+                <label class="custom-control-label" for="filter-size-2">Small</label>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="filter-size-3">
+                <label class="custom-control-label" for="filter-size-3">Medium</label>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="filter-size-4">
+                <label class="custom-control-label" for="filter-size-4">Large</label>
+            </div>
+        </div>
+        <div class="mt-2 mb-2 pl-2">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="filter-size-5">
+                <label class="custom-control-label" for="filter-size-5">X-Large</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+        <h6 class="text-uppercase font-weight-bold">Price</h6>
+        <div class="price-filter-control">
+            <input type="number" class="form-control w-50 pull-left mb-2" value="50" id="price-min-control">
+            <input type="number" class="form-control w-50 pull-right" value="150" id="price-max-control">
+        </div>
+        <input id="ex2" type="text" class="slider " value="50,150" data-slider-min="10" data-slider-max="200" data-slider-step="5" data-slider-value="[50,150]" data-value="50,150" style="display: none;">
+        <a href="#" class="btn btn-lg btn-block btn-primary mt-5">Update Results</a>
+    </div>
+
+
+    @* produkt liste title *@
+    <div class="col-sm-12 col-md-12 col-lg-12 text-center pt-5 pb-5">
+        <h1>Title</h1>
+    </div>
+
+    @*  *@
+    <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+        <div class="dropdown text-md-right text-center float-md-right mb-3 mt-3 mt-md-0 mb-md-0">
+            <label class="mr-2">Sort by:</label>
+            <a class="btn btn-lg btn-light dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relevance <span class="caret"></span></a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; transform: translate3d(71px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
+                <a class="dropdown-item" href="#">mest populær</a>
+                <a class="dropdown-item" href="#">senste annoncer</a>
+                <a class="dropdown-item" href="#">Price Ascending</a>
+                <a class="dropdown-item" href="#">Price decending</a>
+            </div>
+        </div>
+    </div>
+    @{
+        foreach (var item in Model)
+        {
+
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="product-wrapper mb-45 text-center">
+                    <div class="product-img">
+                        <div class="product-topbar text-center">
+                            <h4 class="TextColor-White">@item.Product[0].Brand </h4>
+                        </div>
+                        <a href="rent/opendetails/@item.RentalID" data-abc="true">
+                            <img class="img-fluid" src="@item.Product[0].ImageDataUrl" alt="">
+                        </a>
+                        <div class="product-action">
+                            <div class="product-action-style">
+                                <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#examplemodal" href="rent/opendetails/@item.RentalID" data-abc="true">
+                                    <i class="material-icons">
+                                        <span class="material-icons-outlined">
+                                            add
+                                        </span>
+                                    </i>
+                                </a>
+                                <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                    <i class="material-icons">
+                                        <span class="material-icons-outlined">
+                                            description
+                                        </span>
+                                    </i>
+                                </a>
+                                <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                    <i class="material-icons">
+                                        <span class="material-icons-outlined">
+                                            shopping_cart
+                                        </span>
+                                    </i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    @*
+        Next senction page bottons.
+    *@
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <nav class="pb-5" aria-label="Page navigation example ">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</div>
+
+
+
+@*
+    Patners deling af produkter.
+*@
+<div class="container-fluid">
+    <div class="row patnerRow" id="patnerRowOne">
+        @*
+            Patner one products
+        *@
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center pb-5 pt-5">
+            <h1 class="Font-Fam-Franklin">Partner Title</h1>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="product-wrapper mb-45 text-center">
+                <div class="product-img">
+                    <div class="product-topbar text-center">
+                        <h4 class="TextColor-White">Produkt Navn</h4>
+                    </div>
+                    <a href="#" data-abc="true">
+                        <img class="img-fluid" src="https://images.unsplash.com/photo-1529645244693-8d2552bd5d1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" alt="">
+                    </a>
+                    <div class="product-action">
+                        <div class="product-action-style">
+                            <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        add
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        description
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        shopping_cart
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="product-wrapper mb-45 text-center">
+                <div class="product-img">
+                    <div class="product-topbar text-center">
+                        <h4 class="TextColor-White">Produkt Navn</h4>
+                    </div>
+                    <a href="#" data-abc="true">
+                        <img class="img-fluid" src="https://images.unsplash.com/photo-1618495843164-db3fbdca57d4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1935&q=80" alt="">
+                    </a>
+                    <div class="product-action">
+                        <div class="product-action-style">
+                            <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        add
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        description
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        shopping_cart
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="product-wrapper mb-45 text-center">
+                <div class="product-img">
+                    <div class="product-topbar text-center">
+                        <h4 class="TextColor-White">Produkt Navn</h4>
+                    </div>
+                    <a href="#" data-abc="true">
+                        <img class="img-fluid" src="https://images.unsplash.com/photo-1565608004608-404b352f8070?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=735&q=80" alt="">
+                    </a>
+                    <div class="product-action">
+                        <div class="product-action-style">
+                            <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        add
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        description
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        shopping_cart
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*
+            Patner two products
+        *@
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="product-wrapper mb-45 text-center">
+                <div class="product-img">
+                    <div class="product-topbar text-center">
+                        <h4 class="TextColor-White">Produkt Navn</h4>
+                    </div>
+                    <a href="#" data-abc="true">
+                        <img class="img-fluid" src="https://images.unsplash.com/photo-1551304885-277107370841?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=764&q=80" alt="">
+                    </a>
+                    <div class="product-action">
+                        <div class="product-action-style">
+                            <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        add
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        description
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        shopping_cart
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center pb-5 pt-5">
+            <h1 class="Font-Fam-Franklin">Partner Title</h1>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="product-wrapper mb-45 text-center">
+                <div class="product-img">
+                    <div class="product-topbar text-center">
+                        <h4 class="TextColor-White">Produkt Navn</h4>
+                    </div>
+                    <a href="#" data-abc="true">
+                        <img class="img-fluid" src="https://images.unsplash.com/photo-1529645244693-8d2552bd5d1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80" alt="">
+                    </a>
+                    <div class="product-action">
+                        <div class="product-action-style">
+                            <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        add
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        description
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        shopping_cart
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="product-wrapper mb-45 text-center">
+                <div class="product-img">
+                    <div class="product-topbar text-center">
+                        <h4 class="TextColor-White">Produkt Navn</h4>
+                    </div>
+                    <a href="#" data-abc="true">
+                        <img class="img-fluid" src="https://images.unsplash.com/photo-1618495843164-db3fbdca57d4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1935&q=80" alt="">
+                    </a>
+                    <div class="product-action">
+                        <div class="product-action-style">
+                            <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        add
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        description
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        shopping_cart
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="product-wrapper mb-45 text-center">
+                <div class="product-img">
+                    <div class="product-topbar text-center">
+                        <h4 class="TextColor-White">Produkt Navn</h4>
+                    </div>
+                    <a href="#" data-abc="true">
+                        <img class="img-fluid" src="https://images.unsplash.com/photo-1565608004608-404b352f8070?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=735&q=80" alt="">
+                    </a>
+                    <div class="product-action">
+                        <div class="product-action-style">
+                            <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        add
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        description
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        shopping_cart
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-3">
+            <div class="product-wrapper mb-45 text-center">
+                <div class="product-img">
+                    <div class="product-topbar text-center">
+                        <h4 class="TextColor-White">Produkt Navn</h4>
+                    </div>
+                    <a href="#" data-abc="true">
+                        <img class="img-fluid" src="https://images.unsplash.com/photo-1551304885-277107370841?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=764&q=80" alt="">
+                    </a>
+                    <div class="product-action">
+                        <div class="product-action-style">
+                            <a class="action-plus" title="Quick View" data-toggle="modal" data-target="#exampleModal" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        add
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-heart" title="Wishlist" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        description
+                                    </span>
+                                </i>
+                            </a>
+                            <a class="action-cart" title="Add To Cart" href="#" data-abc="true">
+                                <i class="material-icons">
+                                    <span class="material-icons-outlined">
+                                        shopping_cart
+                                    </span>
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

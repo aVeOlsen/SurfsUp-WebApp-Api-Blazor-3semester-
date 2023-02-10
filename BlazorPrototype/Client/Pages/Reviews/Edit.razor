@@ -1,0 +1,35 @@
+﻿@page "/reviews/edit/{ReviewID:int}"
+@using SurfsUpClassLibrary
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime js
+@attribute [Authorize]
+<h3>Edit</h3>
+<h2>Review</h2>
+<Form ButtonText="Rediger review" rev="rev"
+      OnValidSubmit="@EditReview" />
+
+@code {
+
+    [Parameter]
+    public int ReviewID { get; set; }
+    Review rev = new Review();
+
+
+    protected async override Task OnParametersSetAsync()
+    {
+        rev = await http.GetFromJsonAsync<Review>($"/api/reviews/{ReviewID}");
+    }
+
+    async Task EditReview()
+    {
+        //var user = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
+        //rev.ByUserID = user.FindFirst(c => c.Type == "sub")?.Value;
+
+        await http.PutAsJsonAsync($"/api/reviews/{ReviewID}", rev);
+        await js.InvokeVoidAsync("alert", $"Opdatering fuldført!");
+        uriHelper.NavigateTo("/");
+    }
+}

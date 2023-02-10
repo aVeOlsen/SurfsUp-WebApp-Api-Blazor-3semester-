@@ -1,0 +1,58 @@
+﻿@page "/reviews/details/{ReviewID:int}"
+@using SurfsUpClassLibrary
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager uriHelper
+@inject HttpClient http
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+
+<h2>Detaljer Review</h2>
+<hr />
+<form>
+    <div class="row">
+        <div class=" col-md-8">
+            <div class="form-group">
+                <label>Review Beskriveslse:</label>
+                <label>@rev.Description</label>
+            </div>
+            <div class="form-group">
+                <label>Rating:</label>
+                <label>@rev.Rating</label>
+            </div>
+            <div class="form-group">
+                <label>Dato:</label>
+                <label>@rev.Date</label>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Back" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@code {
+    [Parameter]
+    public int ReviewID { get; set; }
+
+
+    Review rev = new Review();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        rev = await http.GetFromJsonAsync<Review>($"/api/reviews/{ReviewID}");
+    }
+
+    void Cancel()
+    {
+        uriHelper.NavigateTo("/");
+    }
+
+
+}

@@ -1,0 +1,70 @@
+﻿@page "/fetchdata"
+@using SurfsUpClassLibrary
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@attribute [Authorize]
+@inject HttpClient http
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center pt-5 pb-5">
+            <h1 class="Font-Fam-Nav-Calibri">Spots Oversigt</h1>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center pb-2">
+            <div class="text-md-left text-center float-md-left mb-3 mt-3 mt-md-0 mb-md-0">
+                <a class="flat-butt flat-underline-butt" href="spots/create">Opret Spot</a>
+            </div>
+            <div class="dropdown text-md-right text-center float-md-right mb-3 mt-3 mt-md-0 mb-md-0">
+                <label class="mr-2">Sort by:</label>
+                <a class="btn btn-lg btn-light dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relevance <span class="caret"></span></a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; transform: translate3d(71px, 48px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <a class="dropdown-item" href="#">mest populær</a>
+                    <a class="dropdown-item" href="#">senste annoncer</a>
+                    <a class="dropdown-item" href="#">Price Ascending</a>
+                    <a class="dropdown-item" href="#">Price decending</a>
+                </div>
+            </div>
+        </div>
+        @{
+            foreach (var item in spots)
+            {
+                <div class="col-sm-12 col-md-6 col-lg-4 pb-5">
+                    <a href="spots/opendetails/@item.SpotID">
+                        <div class="pt-0 pb-0 pr-0 pl-0 shadow-sm">
+                            <img class="img-fluid" src="@item.ImageDataUrl" />
+                            <div class="card-body pb-0 pr-0 pl-0 pt-0">
+                                <div class="card-header custom-card-header text-center pr-0 pl-0">
+                                    <h5 class="mb-0">@item.SpotName</h5>
+                                </div>
+                                <p class="card-text pr-4 pl-4 pt-4 pb-2 mb-0 "><strong>location: </strong>@item.Address</p>
+                                <p class="card-text pr-4 pl-4 pb-2 mb-0 ">@item.SpotDescription</p>
+                                @*<div class="card-header custom-card-header pr-0 pl-0 pt-1 pb-1 text-center">
+                                        <span class="material-icons pl-1">star_rate</span>
+                                        <span class="material-icons pl-1">star_rate</span>
+                                        <span class="material-icons pl-1">star_rate</span>
+                                        <span class="material-icons pl-1">star_half</span>
+                                        <span class="material-icons pl-1">star_border</span>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            }
+        }
+    </div>
+</div>
+
+
+@code {
+
+    private List<Spot> spots { get; set; } = new List<Spot>();
+
+    protected async override Task OnInitializedAsync()
+    {
+        spots = await http.GetFromJsonAsync<List<Spot>>($"/api/spots");
+
+    }
+
+
+}

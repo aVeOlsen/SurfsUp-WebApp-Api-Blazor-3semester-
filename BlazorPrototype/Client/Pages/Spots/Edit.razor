@@ -1,0 +1,35 @@
+﻿@page "/spots/edit/{SpotID:int}"
+@using SurfsUpClassLibrary
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<h3>Rediger</h3>
+<h2>Spot</h2>
+
+<Form ButtonText="Gem spot" spot="spot"
+      OnValidSubmit="@EditSpot" />
+
+@code {
+
+    [Parameter]
+    public int SpotID { get; set; }
+
+    Spot spot = new Spot();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        spot = await http.GetFromJsonAsync<Spot>($"/api/spots/{SpotID}");
+    }
+
+
+    async Task EditSpot()
+    {
+        await http.PutAsJsonAsync($"/api/spots/{SpotID}", spot);
+        await js.InvokeVoidAsync("alert", "Updated Succesfully!");
+        uriHelper.NavigateTo("/");
+    }
+}

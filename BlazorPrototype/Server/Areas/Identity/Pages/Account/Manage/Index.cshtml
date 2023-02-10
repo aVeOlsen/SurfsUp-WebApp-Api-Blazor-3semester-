@@ -1,0 +1,98 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.PhoneNumber"></label>
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+<p>Reviews</p>
+<a class="flat-butt flat-underline-butt TextColor-White mb-4 ml-2" href="../../reviews/create">Create New</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviews[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviews[0].Rating)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Reviews)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    <a href="../../reviews/edit/@item.ReviewID">Edit</a> |
+                    <a href="../../reviews/details/@item.ReviewID">Details</a> |
+                    <a href="../../reviews/delete/@item.ReviewID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<p>Spots</p>
+<a class="flat-butt flat-underline-butt TextColor-White mb-4 ml-2" href="../../spots/create">Create New</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Spots[0].SpotName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Spots[0].City)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Spots)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpotName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    <a href="../../spots/edit/@item.SpotID">Edit</a> |
+                    <a href="../../spots/details/@item.SpotID">Details</a> |
+                    <a href="../../spots/delete/@item.SpotID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

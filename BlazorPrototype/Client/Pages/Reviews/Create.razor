@@ -1,0 +1,30 @@
+﻿@page "/reviews/create"
+@using SurfsUpClassLibrary
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@attribute [Authorize]
+
+<h3>Create</h3>
+<h2>Review</h2>
+<Form ButtonText="Create review" rev="@rev"
+      OnValidSubmit="@CreateReview" />
+
+
+@code {
+
+    [Parameter]
+    public Review rev { get; set; } = new Review();
+
+    async Task CreateReview()
+    {
+        //Får fat i user og dermed userid så dette tilføjes til api controller
+        var user = (await AuthenticationStateProvider.GetAuthenticationStateAsync()).User;
+        //Bruger her JSON web token til at få fat i userID
+        rev.ByUserID = user.FindFirst(c => c.Type == "sub")?.Value;
+        await http.PostAsJsonAsync("/api/reviews/", rev);
+        uriHelper.NavigateTo("/");
+    }
+}

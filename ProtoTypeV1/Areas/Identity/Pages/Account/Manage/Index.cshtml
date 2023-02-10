@@ -1,0 +1,162 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profil";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username">Hej @Model.Username</label>
+            </div>
+        </form>
+    </div>
+</div>
+<p>Udlejninger</p>
+<a class="flat-butt flat-underline-butt TextColor-White mb-4 ml-2" asp-controller="Rent" asp-action="Create">Create New</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rentals[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rentals[0].ToDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Rentals)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ToDate)
+                </td>
+                <td>
+                    <a asp-controller="Rent" asp-action="Edit" asp-route-id="@item.RentalID">Edit</a> |
+                    <a asp-controller="Rent" asp-action="Details" asp-route-id="@item.RentalID">Details</a> |
+                    <a asp-controller="Rent" asp-action="Delete" asp-route-id="@item.RentalID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<p>Produkter</p>
+<a class="flat-butt flat-underline-butt TextColor-White mb-4 ml-2" asp-controller="Product" asp-action="Create">Create New</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].TypeBoard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products[0].Brand)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+
+            foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TypeBoard)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductID">Edit</a> |
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
+                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<br />
+<p>Reviews</p>
+<a class="flat-butt flat-underline-butt TextColor-White mb-4 ml-2" asp-controller="Review" asp-action="Create">Create New</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviews[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reviews[0].Rating)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Reviews)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    <a asp-controller="Review" asp-action="Edit" asp-route-id="@item.ReviewID">Edit</a> |
+                    <a asp-controller="Review" asp-action="Details" asp-route-id="@item.ReviewID">Details</a> |
+                    <a asp-controller="Review" asp-action="Delete" asp-route-id="@item.ReviewID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+<p>Spots</p>
+<a class="flat-butt flat-underline-butt TextColor-White mb-4 ml-2" asp-controller="Spots" asp-action="Create">Create New</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Spots[0].SpotName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Spots[0].City)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Spots)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SpotName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    <a asp-controller="Spots" asp-action="Edit" asp-route-id="@item.SpotID">Edit</a> |
+                    <a asp-controller="Spots" asp-action="Details" asp-route-id="@item.SpotID">Details</a> |
+                    <a asp-controller="Spots" asp-action="Delete" asp-route-id="@item.SpotID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

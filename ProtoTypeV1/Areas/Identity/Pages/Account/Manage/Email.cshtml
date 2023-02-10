@@ -1,0 +1,86 @@
+﻿@page
+@model EmailModel
+@{
+    ViewData["Title"] = "Opdater kontaktinformation";
+    ViewData["ActivePage"] = ManageNavPages.Email;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <form id="email-form" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                @if (Model.IsEmailConfirmed)
+                {
+                    <div class="input-group">
+                        <input asp-for="Email" class="form-control" disabled />
+                        <div class="input-group-append">
+                            <span class="input-group-text text-success font-weight-bold">✓</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="Email" class="form-control" disabled />
+                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Verificer email</button>
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewEmail"></label>
+                <input asp-for="Input.NewEmail" class="form-control" />
+                <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
+            </div>
+            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">Opdater email</button>
+            
+            <div class="form-group">
+                <label asp-for="Input.NewPhoneNumber"></label>
+                <input asp-for="Input.NewPhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.NewPhoneNumber" class="text-danger"></span>
+            </div>
+            <button id="update-profile-button" type="submit" asp-page-handler="ChangePhone" class="btn btn-primary">Opdater nummer</button>
+        </form>
+        <h5>Opdater brugeroplysninger</h5>
+        <form id="User-form" method="post">
+            <div class="form-group">
+                <label asp-for="Input.NewFirstName"></label>
+                <input asp-for="Input.NewFirstName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewLastName"></label>
+                <input asp-for="Input.NewLastName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewStreet"></label>
+                <input asp-for="Input.NewStreet" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewHouseNumber"></label>
+                <input asp-for="Input.NewHouseNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewPostalCode"></label>
+                <input asp-for="Input.NewPostalCode" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewRegion"></label>
+                <input asp-for="Input.NewRegion" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewCity"></label>
+                <input asp-for="Input.NewCity" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.NewCountry"></label>
+                <input asp-for="Input.NewCountry" class="form-control" />
+            </div>
+            <button id="change-userData-button" type="submit" asp-page-handler="ChangeUserData" class="btn btn-primary">Opdater bruger information</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
